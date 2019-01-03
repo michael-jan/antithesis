@@ -1,0 +1,78 @@
+iplug-todo
+
+ALL - make side chain/multi-channel definitions more consistent and more flexible, i.e. mono or stereo SC
+ALL - lock free-ness
+ALL - GetHostVersionStr() etc are not reliable, especially with AU
+ALL - more flexible resource importing (not just png resources)
+ALL - improve text entry dimensions / text size
+ALL - freetype based font renderer, import .ttf files
+ALL - drag & drop area
+ALL - OS tooltips?
+ALL - carbon non-composited text entry
+ALL - carbon non-composited doesn't just draw the dirty area of the GUI, it always redraws the entire GUI
+ALL - Sysex?
+
+Examples:
+
+- IPlugPolySynth - needs improvement
+- IPlugDrumSynth
+- IPlugMultiChannel - standalone app doesn't work, due to stereo limitation
+- IPlugOpenGL - drawing not implemented on win
+- IPlugControls - some controls not finished
+- IPlugEEL - not finished
+
+AU wrapper:
+
+- preset changing from inside the plugin doesn't consistently update logic's GUI
+- auval "preset name not retained" message
+- SendMidiMsg() not implemented
+- possibility of instruments with multichannel output, e.g. 5.1
+- possibility of instruments with side-chain inputs
+
+VST3 wrapper:
+
+- SendMidiMsg()
+- pitch bend & other common MIDI CC parameters
+
+RTAS wrapper:
+
+- "continuous" gui controls linked to enumerated list parameters jump around
+- multi-mono with PLUG_DOES_STATE_CHUNKS 1 doesn't sync instances (likely PT issue)
+- auxiliary output stems for instruments with multiple outs
+- keycatcher doesn't work (OSX)
+- text entries disabled (OSX)
+- audiosuite
+- presets list
+- close session frozen buffer (only happens when debugging?)
+- SendMidiMsg/s
+
+AAX wrapper:
+
+- "continuous" gui controls linked to enumerated list parameters jump around
+- multi-mono with PLUG_DOES_STATE_CHUNKS 1 doesn't sync instances
+- auxiliary output stems for instruments with multiple outs
+- SendMidiMsg/s
+
+Standalone wrapper:
+
+- edit to use IPlugBase buffer attaching code
+- some keys not received by windows standalone...arrow keys for example DLGC_WANTARROWS
+- how to change audio devices without hanging the main loop?
+- fade out audio stream when changing settings?
+- make it work with no audio input & look at PLUG_IS_INST
+- make it work with variable i/o count
+- make it work with non-gui plugins
+- transport & tempo generator
+- missing functions in IPlugStandalone.h
+- windows midi - sendmidimsg() crash
+- windows midi - MS Built in GS Synth crashes when selected in prefs (XP)
+- state persistence - save fxp & option
+- look again at JACK client osx
+- get latency and display
+- improve MIDI output timing (portmidi instead of RTMidi?)
+
+IOS wrapper:
+
+- edit to use IPlugBase buffer attaching code
+- make it work better on device
+- see if it works with IOS 5 sdk / float remoteIO
