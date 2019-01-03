@@ -67,7 +67,7 @@ public:
 		menu.AddItem("Save values as text only...");
 		menu.AddItem("Load from values as text...");
 		menu.AddSeparator();
-		menu.AddItem("Export general param info as text");
+		menu.AddItem("Export general param info as csv");
 
 
 		if (gui->CreateIPopupMenu(&menu, &mRECT))
@@ -160,7 +160,7 @@ public:
 				break;
 			case 14: //Export param info
 				fileName.Set("param_info");
-				GetGUI()->PromptForFile(&fileName, kFileSave, &mPreviousPath, "txt");
+				GetGUI()->PromptForFile(&fileName, kFileSave, &mPreviousPath, "csv");
 				ExportParamInfo(fileName.Get(), paramEnumNames);
 			default:
 				break;
@@ -241,7 +241,7 @@ public:
 	{
 		int i, n = mPlug->NParams();
 		FILE* fp = fopen(filename, "w");
-		fprintf(fp, "type,min,max\n");
+		fprintf(fp, "name,type,min,max\n");
 		for (i = 0; i < n; ++i)
 		{
 			IParam* pParam = mPlug->GetParam(i);
@@ -273,7 +273,7 @@ public:
 				smax = to_string(max);
 				break;
 			}
-			fprintf(fp, "%s,%s,%s\n", paramType.c_str(), smin.c_str(), smax.c_str());
+			fprintf(fp, "%s,%s,%s,%s\n", paramEnumNames[i], paramType.c_str(), smin.c_str(), smax.c_str());
 		}
 		fclose(fp);
 	}

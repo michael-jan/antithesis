@@ -1,1 +1,40 @@
-﻿  IPlug.vcxproj -> C:\Projects\ai-sound-design\wdl-ol\WDL\IPlug\build-win\Win32\Debug\IPlug.lib
+﻿  Hosts.cpp
+  IBitmapMonoText.cpp
+c:\projects\antithesis\wdl-ol\wdl\iplug\iplugstructs.h(239): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\projects\antithesis\wdl-ol\wdl\iplug\iplugstructs.h(241): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\projects\antithesis\wdl-ol\wdl\iplug\iplugstructs.h(247): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\projects\antithesis\wdl-ol\wdl\iplug\iplugstructs.h(249): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  IControl.cpp
+c:\projects\antithesis\wdl-ol\wdl\iplug\iplugstructs.h(239): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\projects\antithesis\wdl-ol\wdl\iplug\iplugstructs.h(241): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\projects\antithesis\wdl-ol\wdl\iplug\iplugstructs.h(247): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\projects\antithesis\wdl-ol\wdl\iplug\iplugstructs.h(249): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  IGraphics.cpp
+c:\projects\antithesis\wdl-ol\wdl\iplug\iplugstructs.h(239): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\projects\antithesis\wdl-ol\wdl\iplug\iplugstructs.h(241): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\projects\antithesis\wdl-ol\wdl\iplug\iplugstructs.h(247): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\projects\antithesis\wdl-ol\wdl\iplug\iplugstructs.h(249): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\projects\antithesis\wdl-ol\wdl\iplug\igraphics.cpp(706): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\projects\antithesis\wdl-ol\wdl\iplug\igraphics.cpp(707): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  IGraphicsWin.cpp
+c:\projects\antithesis\wdl-ol\wdl\iplug\iplugstructs.h(239): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\projects\antithesis\wdl-ol\wdl\iplug\iplugstructs.h(241): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\projects\antithesis\wdl-ol\wdl\iplug\iplugstructs.h(247): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\projects\antithesis\wdl-ol\wdl\iplug\iplugstructs.h(249): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  IParam.cpp
+  IPlugBase.cpp
+c:\projects\antithesis\wdl-ol\wdl\iplug\iplugstructs.h(239): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\projects\antithesis\wdl-ol\wdl\iplug\iplugstructs.h(241): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\projects\antithesis\wdl-ol\wdl\iplug\iplugstructs.h(247): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\projects\antithesis\wdl-ol\wdl\iplug\iplugstructs.h(249): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  IPlugStructs.cpp
+c:\projects\antithesis\wdl-ol\wdl\iplug\iplugstructs.h(239): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\projects\antithesis\wdl-ol\wdl\iplug\iplugstructs.h(241): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\projects\antithesis\wdl-ol\wdl\iplug\iplugstructs.h(247): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\projects\antithesis\wdl-ol\wdl\iplug\iplugstructs.h(249): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  IPopupMenu.cpp
+  Log.cpp
+  Generating Code...
+comctl32.lib(COMCTL32.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in wininet.lib(WININET.dll); second definition ignored
+comctl32.lib(COMCTL32.dll) : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+  IPlug.vcxproj -> C:\Projects\antithesis\wdl-ol\WDL\IPlug\build-win\Win32\Debug\IPlug.lib

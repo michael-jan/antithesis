@@ -1,1 +1,47 @@
-﻿  lice.vcxproj -> C:\Projects\ai-sound-design\wdl-ol\WDL\lice\build-win\Win32\Debug\lice.lib
+﻿  png.c
+  pngerror.c
+  pngget.c
+  pngmem.c
+  pngpread.c
+  pngread.c
+  pngrio.c
+  pngrtran.c
+  pngrutil.c
+  pngset.c
+  pngtrans.c
+  pngwio.c
+  pngwrite.c
+  pngwtran.c
+  pngwutil.c
+  adler32.c
+  compress.c
+  crc32.c
+  deflate.c
+  gzclose.c
+  Generating Code...
+  Compiling...
+  gzlib.c
+  gzread.c
+  gzwrite.c
+  infback.c
+  inffast.c
+  inflate.c
+  inftrees.c
+  trees.c
+  uncompr.c
+  zutil.c
+  Generating Code...
+  lice.cpp
+  lice_arc.cpp
+  lice_colorspace.cpp
+  lice_line.cpp
+  lice_palette.cpp
+  lice_png.cpp
+  lice_texgen.cpp
+  lice_textnew.cpp
+  Generating Code...
+pngwutil.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+pngwtran.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+pngwrite.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+pngwio.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+  lice.vcxproj -> C:\Projects\antithesis\wdl-ol\WDL\lice\build-win\Win32\Debug\lice.lib
