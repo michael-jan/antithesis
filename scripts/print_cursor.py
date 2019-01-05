@@ -1,5 +1,6 @@
-#! python3
-import pyautogui, sys
+# Prints and repeatedly updates cursor xy position
+# Obtained from pyautogui documentation
+import pyautogui
 print('Press Ctrl-C to quit.')
 try:
     while True:
