@@ -25,6 +25,4 @@ while True:
 		break
 	i += 1
 
-
 out.close()
-

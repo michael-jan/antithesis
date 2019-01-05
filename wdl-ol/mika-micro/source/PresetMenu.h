@@ -67,7 +67,9 @@ public:
 		menu.AddItem("Save values as text only...");
 		menu.AddItem("Load from values as text...");
 		menu.AddSeparator();
-		menu.AddItem("Export general param info as csv");
+		menu.AddItem("Export general param info as csv...");
+		menu.AddSeparator();
+		menu.AddItem("Set osc 2 coarse to that of osc 1");
 
 
 		if (gui->CreateIPopupMenu(&menu, &mRECT))
@@ -162,6 +164,8 @@ public:
 				fileName.Set("param_info");
 				GetGUI()->PromptForFile(&fileName, kFileSave, &mPreviousPath, "csv");
 				ExportParamInfo(fileName.Get(), paramEnumNames);
+			case 16: //Set osc2 coarse to that of osc1
+				GetGUI()->SetParameterFromGUI(5, mPlug->GetParam(1)->GetNormalized());
 			default:
 				break;
 			}
