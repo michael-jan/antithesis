@@ -1,6 +1,6 @@
 from pathlib import Path
 
-n = 1593
+n = 3627
 
 print('starting search')
 
