@@ -7,7 +7,7 @@ Electronic music producers use synthesizers to craft sounds that we hear in mode
 Perhaps modern machine learning techniques can be used to "hear" such sounds and predict the parameters (the "preset") that created it in a given synth.
 
 ### Methodology
-I started by generating a dataset of audio-preset pairs by randomly setting the parameters in a synth and subsequently rendering the audio. This process was automated with a script I automated in Python using [pyautogui](https://github.com/asweigart/pyautogui). The VST synth plugin I chose for my experiements was [Mika Micro](https://tesselode.itch.io/mika-micro), due to it being a lightweight open-source subtractive synth. To facilitate the saving and loading presets from Mika Micro in raw text format (as opposed to the humanly unreadable .fxp format), I modified its C++ code and rebuilt the plugin from Visual Studio.
+I started by generating a dataset of audio-preset pairs by randomly setting the parameters in a synth and subsequently rendering the audio. This process was automated with a script I automated in Python using [pyautogui](https://github.com/asweigart/pyautogui). The VST synth plugin I chose for my experiments was [Mika Micro](https://tesselode.itch.io/mika-micro), due to it being a lightweight open-source subtractive synth. To facilitate the saving and loading presets from Mika Micro in raw text format (as opposed to the humanly unreadable .fxp format), I modified its C++ code and rebuilt the plugin from Visual Studio.
 
 <img align="right" width="200" height="150" src="https://i.stack.imgur.com/pXIap.png">
 
