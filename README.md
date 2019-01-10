@@ -1,5 +1,5 @@
 # Antithesis
-This repository houses Antithesis, my investigation into the reverse-engineering of synthesized sounds using machine learning techniques. Feel free to explore my code!
+This repository houses Antithesis, my investigation into the reverse-engineering of synth presets from raw audio using machine learning. Feel free to explore my code!
 
 ### Introduction
 Electronic music producers use synthesizers to craft sounds that we hear in modern music. Being able to hear a sound and recreate it on a synthesizer is a hard task that generally takes a music producer years of experience to master. It follows that an algorithmic method to "re-create" the parameters from raw audio would be invaluable to music producers. For one, producers can study how said sounds were created and become better sound designers. Furthermore, they could make edits to existing sounds and samples to use in their music.
