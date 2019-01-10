@@ -1,3 +1,4 @@
+/ignore
 /data/wav
 /data/individual_presets
 /data/spectograms
@@ -23,7 +24,7 @@
 /wdl-ol/*xcuserdata*
 /wdl-ol/*.xcschememanagement.plist
 /wdl-ol/build-*
-/wdl-ol//IPlugExamples/*/*.vcxproj.user
+/wdl-ol/IPlugExamples/*/*.vcxproj.user
 /wdl-ol/PCH/*
 /wdl-ol/VST3_SDK/*
 /wdl-ol/VST_SDK/*

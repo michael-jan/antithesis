@@ -1,6 +1,8 @@
 import pandas as pd
 from pathlib import Path
 
+print('starting...')
+
 # the final output csv
 out = open('../data/presets.csv', 'w')
 
@@ -26,3 +28,5 @@ while True:
     i += 1
 
 out.close()
+
+print('ending')

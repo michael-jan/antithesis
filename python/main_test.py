@@ -1,3 +1,4 @@
+import os
 import numpy as np
 import pandas as pd
 
@@ -6,14 +7,15 @@ from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
 from keras.optimizers import Adam
 
-from kapre.time_frequency import Melspectrogram
+from kapre.time_frequency import Spectrogram
 
 import librosa
 
-
 def print_df(df):
     print('printing df...')
-    to_print = [df.iloc[:5, 4 * i:4 * i + 4] for i in range(12)]
+    num_cols = len(df.columns)
+    rows = 5
+    to_print = [df.iloc[:rows, 4 * i:4 * i + 4] for i in range(int(num_cols/4) + 1)]
     for line in to_print:
         print(line, '\n')
     print('df column names:', df.columns)
@@ -33,7 +35,7 @@ def standardize_ndarray(ndarray):
 
 
 # returns dataframe of processed preset param data
-def process_presets(file_path, types, ranges):
+def process_presets(file_path, types, ranges, display=False):
     print('reading and preprocessing presets...')
 
     df = pd.read_csv(file_path)
@@ -42,6 +44,16 @@ def process_presets(file_path, types, ranges):
     to_drop = ['kOsc2Coarse', 'kVoiceMode', 'kGlideSpeed', 'kMasterVolume']
     df = df.drop(columns=to_drop)
 
+    # drop columns where all values identical
+    cols = df.columns
+    for col_name in cols:
+        if(np.min(df[col_name]) == np.max(df[col_name])):
+            df = df.drop(columns=[col_name])
+
+    df['kOsc1Split'] = df['kOsc1Split'].abs()
+    ranges['kOsc1Split'] = (0, ranges['kOsc1Split'][1])
+
+    # preprocess the remaining columns
     cols = df.columns
     for col_name in cols:
         t = types[col_name]
@@ -58,6 +70,9 @@ def process_presets(file_path, types, ranges):
         else:
             # this should never happen
             print('Unknown type:', t)
+
+    if display:
+        print_df(df)
 
     return df
 
@@ -100,17 +115,20 @@ def read_wavs(folder_path, n):
 # make the model
 def make_model():
     print('making model...')
-    sr = 44100
     input_shape = (2, 706059)
 
     model = Sequential()
 
-    model.add(Melspectrogram(n_dft=512, n_hop=512, input_shape=input_shape,
-                             padding='same', sr=sr, n_mels=64,
-                             fmin=0.0, fmax=sr / 2, power_melgram=1.0,
-                             return_decibel_melgram=True, trainable_fb=True,
-                             trainable_kernel=True, trainable=False,
-                             name='stft'))
+    model.add(Spectrogram(n_dft=2048, n_hop=256, padding='same',
+                          power_spectrogram=2.0, return_decibel_spectrogram=False,
+                          trainable_kernel=False, image_data_format='default',
+                          input_shape=input_shape
+                          ))
+
+    model.add(Conv2D(16, kernel_size=(3, 3), activation='relu'))
+    model.add(Conv2D(16, kernel_size=(3, 3), activation='relu'))
+    model.add(MaxPooling2D(pool_size=(2, 5)))
+    model.add(Dropout(0.25))
 
     model.add(Conv2D(32, kernel_size=(3, 3), activation='relu'))
     model.add(Conv2D(32, kernel_size=(3, 3), activation='relu'))
@@ -121,29 +139,32 @@ def make_model():
     model.add(Conv2D(64, kernel_size=(3, 3), activation='relu'))
     model.add(MaxPooling2D(pool_size=(2, 5)))
     model.add(Dropout(0.25))
-
-    model.add(Conv2D(128, kernel_size=(3, 3), activation='relu'))
-    model.add(Conv2D(128, kernel_size=(3, 3), activation='relu'))
-    model.add(MaxPooling2D(pool_size=(2, 5)))
-    model.add(Dropout(0.5))
 
     model.add(Flatten())
+    model.add(Dense(1024, activation='relu'))
     model.add(Dense(512, activation='relu'))
     model.add(Dense(256, activation='relu'))
     model.add(Dense(64, activation='relu'))
     model.add(Dense(1, activation='sigmoid'))
+
     print(model.summary())
+
     return model
 
 
 #
 if __name__ == '__main__':
+
+    # use CPU (and RAM) because GPU doesn't have enough memory
+    os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+
+    make_model()
     names, types, ranges = read_info('../data/param_info.csv')
-    df = process_presets('../data/presets.csv', types, ranges)  # outputs
-    df = df.iloc[:1000]
+    df = process_presets('../data/presets.csv', types, ranges, display=True)  # outputs
+    #df = df.iloc[:1000]
     n = df.shape[0]  # total number of data samples
     x = read_wavs('../data/wav', n)
-    y = df[['kOsc1Coarse']].values
+    y = df[['kOsc1Split']].values
 
     train_ratio = 0.7
     train_amount = int(0.7 * n)

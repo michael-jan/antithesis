@@ -69,7 +69,7 @@ public:
 		menu.AddSeparator();
 		menu.AddItem("Export general param info as csv...");
 		menu.AddSeparator();
-		menu.AddItem("Set osc 2 coarse to that of osc 1");
+		menu.AddItem("Constrain parameters");
 
 
 		if (gui->CreateIPopupMenu(&menu, &mRECT))
@@ -158,21 +158,28 @@ public:
 				break;
 			case 12: //Load param values from text
 				GetGUI()->PromptForFile(&fileName, kFileOpen, &mPreviousPath, "txt");
-				LoadPresetText(fileName.Get(), paramEnumNames);		
+				LoadPresetText(fileName.Get(), paramEnumNames);
 				break;
 			case 14: //Export param info
 				fileName.Set("param_info");
 				GetGUI()->PromptForFile(&fileName, kFileSave, &mPreviousPath, "csv");
 				ExportParamInfo(fileName.Get(), paramEnumNames);
-			case 16: //Set osc2 coarse to that of osc1
+			case 16: //Constrain parameters
+				//Set osc2 coarse to that of osc1
+			{
 				GetGUI()->SetParameterFromGUI(5, mPlug->GetParam(1)->GetNormalized());
+				int resets[] = { 4,5,6,7,8,9,10,11,12,13,14,15,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37 };
+				for (int idx : resets) {
+					GetGUI()->SetParameterFromGUI(idx, mPlug->GetParam(idx)->GetDefaultNormalized());
+				}
+			}
 			default:
 				break;
 			}
 		}
+
 	}
 
-	// MY OWN
 	void PresetMenu::DumpPresetText(const char* filename, const char* paramEnumNames[])
 	{
 		int i, n = mPlug->NParams();
@@ -205,7 +212,6 @@ public:
 		fclose(fp);
 	}
 
-	// MY OWN
 	void PresetMenu::LoadPresetText(const char * filename, const char * paramEnumNames[])
 	{
 
@@ -240,7 +246,6 @@ public:
 
 	}
 
-	// MY OWN
 	void PresetMenu::ExportParamInfo(const char * filename, const char * paramEnumNames[])
 	{
 		int i, n = mPlug->NParams();

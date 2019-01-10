@@ -1,14 +1,14 @@
 import pyautogui
 import time
 
-pyautogui.PAUSE = 0.25
+pyautogui.PAUSE = 0.18
 pyautogui.FAILSAFE = True
 
 # 2 seconds to open FL Studio
 time.sleep(2)
 
-counter_start = 3342
-num_iters = 2
+counter_start = 0
+num_iters = 20000
 for i in range(counter_start, counter_start + num_iters):
 
     start_time = time.monotonic()
@@ -34,8 +34,8 @@ for i in range(counter_start, counter_start + num_iters):
     pyautogui.typewrite("audio" + str(i) + ".wav")
 
     # select 'wav' folder
-    pyautogui.doubleClick(300, 200)
-    time.sleep(0.5)
+    # pyautogui.doubleClick(300, 200)
+    time.sleep(0.1)
 
     # click save
     pyautogui.click(750, 515)
@@ -46,6 +46,6 @@ for i in range(counter_start, counter_start + num_iters):
 
     time.sleep(4.5)
 
-    print('iter#:', i, 'of', num_iters, '| seconds:', time.monotonic() - start_time)
+    print('iter#:', i, 'of', num_iters, '| s:', time.monotonic() - start_time)
 
 print('done')
