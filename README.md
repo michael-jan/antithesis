@@ -1,2 +1,2 @@
-# Antithesis: Reverse-Engineering Synth Presets with AI
-An AI sound design assistant that can reverse-engineer sounds from raw audio.
+# Antithesis:
+Antithesis is an investigation into the reverse-engineering of synthesized sounds using machine learning.
