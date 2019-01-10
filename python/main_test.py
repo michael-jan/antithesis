@@ -3,13 +3,22 @@ import numpy as np
 import pandas as pd
 
 import keras.backend as K
-from keras.models import Sequential
-from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
+from keras.models import Sequential, model_from_json
+from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout, LSTM, Permute, Conv1D
 from keras.optimizers import Adam
 
 from kapre.time_frequency import Spectrogram
 
 import librosa
+
+
+def model_from_json_file(file_path):
+    with open(file_path, 'r') as file:
+        json_string = file.read()
+        return model_from_json(json_string, custom_objects={
+            'Spectrogram': Spectrogram
+        })
+
 
 def print_df(df):
     print('printing df...')
@@ -98,7 +107,7 @@ def read_wavs(folder_path, n):
     src_list = []
 
     for i in range(n):
-        if (i % 300 == 0):
+        if (i % 150 == 0):
             print('reading wavs', str(i / n * 100)[:4], '% done')
         file_path = folder_path + '/audio' + str(i) + '.wav'
         src, sr = librosa.load(file_path, sr=None, mono=False)
@@ -113,39 +122,22 @@ def read_wavs(folder_path, n):
 
 
 # make the model
-def make_model():
+def make_model(save=False, save_path="model.json"):
     print('making model...')
+
     input_shape = (2, 706059)
 
     model = Sequential()
 
-    model.add(Spectrogram(n_dft=2048, n_hop=256, padding='same',
-                          power_spectrogram=2.0, return_decibel_spectrogram=False,
-                          trainable_kernel=False, image_data_format='default',
-                          input_shape=input_shape
-                          ))
-
-    model.add(Conv2D(16, kernel_size=(3, 3), activation='relu'))
-    model.add(Conv2D(16, kernel_size=(3, 3), activation='relu'))
-    model.add(MaxPooling2D(pool_size=(2, 5)))
-    model.add(Dropout(0.25))
-
-    model.add(Conv2D(32, kernel_size=(3, 3), activation='relu'))
-    model.add(Conv2D(32, kernel_size=(3, 3), activation='relu'))
-    model.add(MaxPooling2D(pool_size=(2, 5)))
-    model.add(Dropout(0.25))
-
-    model.add(Conv2D(64, kernel_size=(3, 3), activation='relu'))
-    model.add(Conv2D(64, kernel_size=(3, 3), activation='relu'))
-    model.add(MaxPooling2D(pool_size=(2, 5)))
-    model.add(Dropout(0.25))
-
-    model.add(Flatten())
-    model.add(Dense(1024, activation='relu'))
-    model.add(Dense(512, activation='relu'))
-    model.add(Dense(256, activation='relu'))
+    #model.add(Permute((2, 1), input_shape=input_shape))
+    model.add(LSTM(32, input_shape=input_shape))
     model.add(Dense(64, activation='relu'))
     model.add(Dense(1, activation='sigmoid'))
+
+    if save:
+        model_json = model.to_json()
+        with open(save_path, 'w') as file:
+            file.write(model_json)
 
     print(model.summary())
 
@@ -158,26 +150,31 @@ if __name__ == '__main__':
     # use CPU (and RAM) because GPU doesn't have enough memory
     os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 
-    make_model()
+    # model = model_from_json_file('../models/spec_conv2d.json')
+    model = make_model(save=True, save_path='../models/spec_conv2d.json')
+
     names, types, ranges = read_info('../data/param_info.csv')
     df = process_presets('../data/presets.csv', types, ranges, display=True)  # outputs
     #df = df.iloc[:1000]
     n = df.shape[0]  # total number of data samples
-    x = read_wavs('../data/wav', n)
-    y = df[['kOsc1Split']].values
 
+    # 70-30 train-test split
     train_ratio = 0.7
     train_amount = int(0.7 * n)
+
+    x = read_wavs('../data/wav', n)
+    y = df[['kVolEnvA']].values
     x_train = x[:train_amount]
     x_test = x[train_amount:]
     y_train = y[:train_amount]
     y_test = y[train_amount:]
 
-    model = make_model()
+    # compile the model
     optimizer = Adam(lr=0.001, epsilon=1e-08, decay=0.0)
     model.compile(loss='mean_squared_error',
                   optimizer=optimizer)
 
+    # fit the model to the training data
     model.fit(x_train, y_train, batch_size=32, epochs=500, validation_split=0.1)
 
 
