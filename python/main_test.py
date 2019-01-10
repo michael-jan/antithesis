@@ -59,6 +59,7 @@ def process_presets(file_path, types, ranges, display=False):
         if(np.min(df[col_name]) == np.max(df[col_name])):
             df = df.drop(columns=[col_name])
 
+    # negative and positive values of kOsc1Split are essentially the same
     df['kOsc1Split'] = df['kOsc1Split'].abs()
     ranges['kOsc1Split'] = (0, ranges['kOsc1Split'][1])
 
@@ -129,10 +130,7 @@ def make_model(save=False, save_path="model.json"):
 
     model = Sequential()
 
-    #model.add(Permute((2, 1), input_shape=input_shape))
-    model.add(LSTM(32, input_shape=input_shape))
-    model.add(Dense(64, activation='relu'))
-    model.add(Dense(1, activation='sigmoid'))
+    # NOTE: the actual model has already been saved to json
 
     if save:
         model_json = model.to_json()
@@ -150,8 +148,8 @@ if __name__ == '__main__':
     # use CPU (and RAM) because GPU doesn't have enough memory
     os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 
-    # model = model_from_json_file('../models/spec_conv2d.json')
-    model = make_model(save=True, save_path='../models/spec_conv2d.json')
+    model = model_from_json_file('../models/spec_conv2d.json')
+    # model = make_model(save=True, save_path='../models/spec_conv2d.json')
 
     names, types, ranges = read_info('../data/param_info.csv')
     df = process_presets('../data/presets.csv', types, ranges, display=True)  # outputs
